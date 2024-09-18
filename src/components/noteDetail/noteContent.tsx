@@ -10,25 +10,25 @@ export default function NoteContent({
   setNotes,
 }: {
   isMobile: boolean;
-  note: INotes;
-  notes: INotes[];
+  note: INotes | null;
+  notes: INotes[] | null;
   setNotes: (T: INotes[]) => void;
 }) {
   function handleArchive(id: number | string) {
-    const newNotes = notes.map((note) => {
+    const newNotes = notes?.map((note) => {
       if (note.id === id) {
         return { ...note, archived: !note.archived };
       }
       return note;
     });
 
-    setNotes(newNotes);
+    setNotes(newNotes ?? []);
   }
 
   function handleDelete(id: number | string) {
-    const newNotes = notes.filter((note) => note.id !== id);
+    const newNotes = notes?.filter((note) => note.id !== id);
 
-    setNotes(newNotes);
+    setNotes(newNotes ?? []);
     navigate("/");
   }
   return (
@@ -45,14 +45,14 @@ export default function NoteContent({
       <header className="flex flex-col">
         <div className="flex items-center justify-between">
           <p className="text-sm text-neutral-400">
-            {showFormattedDate(note.createdAt)}
+            {showFormattedDate(note?.createdAt ?? "")}
           </p>
           <span className="flex">
             <button
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl hover:bg-neutral-800"
-              onClick={() => handleArchive(note.id)}
+              onClick={() => handleArchive(note?.id ?? 0)}
             >
-              {!note.archived ? (
+              {!note?.archived ? (
                 <Archive size={18} />
               ) : (
                 <ArchiveRestore size={18} />
@@ -60,15 +60,15 @@ export default function NoteContent({
             </button>
             <button
               className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl hover:bg-neutral-800"
-              onClick={() => handleDelete(note.id)}
+              onClick={() => handleDelete(note?.id ?? 0)}
             >
               <Trash size={18} />
             </button>
           </span>
         </div>
-        <h1 className="text-2xl font-bold">{note.title}</h1>
+        <h1 className="text-2xl font-bold">{note?.title ?? ""}</h1>
       </header>
-      <p>{note.body}</p>
+      <p>{note?.body}</p>
     </div>
   );
 }

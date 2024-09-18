@@ -1,12 +1,13 @@
 import INotes from "../../types/notes.js";
 import { MAX_TITLE_LENGTH } from "../../utils/constant.js";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function AddForm({
   notes,
   setNotes,
 }: {
-  notes: INotes[];
+  notes: INotes[] | null;
   setNotes: (T: INotes[]) => void;
 }) {
   const [title, setTitle] = useState("");
@@ -23,7 +24,7 @@ export default function AddForm({
     e.preventDefault();
 
     setNotes([
-      ...notes,
+      ...(notes ?? []),
       {
         id: +new Date(),
         title,
@@ -37,7 +38,17 @@ export default function AddForm({
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+    <motion.form
+      key="addFor"
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{
+        duration: 0.2,
+      }}
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <label htmlFor="title" className="text-neutral-400">
@@ -72,6 +83,6 @@ export default function AddForm({
       >
         Add note
       </button>
-    </form>
+    </motion.form>
   );
 }

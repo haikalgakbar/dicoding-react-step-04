@@ -12,7 +12,7 @@ function NoteDetail({
   isMobile: boolean;
 }) {
   const { notes, setNotes } = useContext(NoteContext);
-  const note = notes.find((note) => note.id.toString() === params);
+  const note = notes?.find((note) => note.id.toString() === params);
 
   return (
     <section

@@ -1,30 +1,16 @@
 import React, { useContext } from "react";
-import INotes from "../types/notes.js";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
 import { TABS } from "../utils/constant.js";
-import { capitalize } from "../utils/format.js";
+import { capitalize, filterNotes } from "../utils/format.js";
+import { NoteContext } from "../utils/context.js";
+import { motion, AnimatePresence } from "framer-motion";
 import Tab from "./noteMenu/tab.js";
 import AddForm from "./noteMenu/addForm.js";
 import Search from "./noteMenu/search.js";
 import NoteCard from "./noteMenu/note.js";
+import NoteNotFound from "./noteMenu/noteNotFound.js";
 import EmptyNote from "./noteMenu/emptyNote.js";
-import { NoteContext } from "../utils/context.js";
-
-function filterNotes(notes: INotes[], tab: string, searchKey?: string) {
-  const q = searchKey?.toLocaleLowerCase();
-
-  return notes.filter((note) => {
-    const matchesTab =
-      tab === TABS[0] ||
-      (tab === TABS[1] && !note.archived) ||
-      (tab === TABS[2] && note.archived);
-
-    const matchesSearchKey = !q || note.title.toLocaleLowerCase().includes(q);
-
-    return matchesTab && matchesSearchKey;
-  });
-}
 
 function NoteMenu({
   params,
@@ -54,10 +40,19 @@ function NoteMenu({
           onClick={() => setIsAddNote(!isAddNote)}
           className="cursor-pointer rounded-lg bg-neutral-800 p-2 hover:bg-neutral-700"
         >
-          {isAddNote ? <X size={20} /> : <Plus size={20} />}
+          <motion.span
+            animate={{ rotate: isAddNote ? 45 : 0 }}
+            className="block"
+          >
+            <Plus size={20} />
+          </motion.span>
         </button>
       </header>
-      {isAddNote && <AddForm notes={notes} setNotes={setNotes} />}
+      <AnimatePresence>
+        {isAddNote && (
+          <AddForm key="addForm" notes={notes} setNotes={setNotes} />
+        )}
+      </AnimatePresence>
       <div className="flex gap-2">
         {TABS.map((tab) => (
           <Tab
@@ -85,15 +80,26 @@ function NoteMenu({
           />
         )}
       </Search>
-      <div className="overflow-clip rounded-lg bg-neutral-900">
-        {filteredNotes.length === 0 ? (
-          <EmptyNote />
-        ) : (
-          filteredNotes.map((note) => (
-            <NoteCard key={note.id} note={note} params={params} />
-          ))
-        )}
-      </div>
+      {notes.length === 0 ? (
+        <EmptyNote />
+      ) : search.length > 0 ? (
+        <NoteNotFound />
+      ) : filteredNotes.length === 0 ? (
+        <NoteNotFound />
+      ) : (
+        <div className="flex flex-col gap-1">
+          <span className="text-sm text-neutral-600">
+            {filteredNotes.length} notes
+          </span>
+          <div className="overflow-clip rounded-lg bg-neutral-900">
+            <AnimatePresence>
+              {filteredNotes.map((note) => (
+                <NoteCard key={note.id} note={note} params={params} />
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
+      )}
     </aside>
   );
 }

@@ -58,3 +58,4 @@ export default tseslint.config({
 - [x] Implement search note from local storage
 - [x] Redesign note detail page
 - [] Refactor component structure
+- [] Use framer motion for animation
