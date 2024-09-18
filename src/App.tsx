@@ -2,6 +2,7 @@ import NoteDetail from "./components/noteDetail.js";
 import NoteMenu from "./components/noteMenu.js";
 import { useWindowSize } from "./utils/hooks.js";
 import { useState, useEffect } from "react";
+import NoteProvider from "./utils/context.js";
 
 function App() {
   const [params, setParams] = useState<string | null>(
@@ -26,10 +27,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <NoteProvider>
       {showNoteMenu && <NoteMenu params={params} isMobile={isMobile} />}
       {showNoteDetail && <NoteDetail params={params} isMobile={isMobile} />}
-    </>
+    </NoteProvider>
   );
 }
 

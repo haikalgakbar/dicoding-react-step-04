@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import INotes from "../types/notes.js";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
@@ -9,7 +9,7 @@ import AddForm from "./noteMenu/addForm.js";
 import Search from "./noteMenu/search.js";
 import NoteCard from "./noteMenu/note.js";
 import EmptyNote from "./noteMenu/emptyNote.js";
-import { useLocalStorage } from "../utils/hooks.js";
+import { NoteContext } from "../utils/context.js";
 
 function filterNotes(notes: INotes[], tab: string, searchKey?: string) {
   const q = searchKey?.toLocaleLowerCase();
@@ -33,7 +33,7 @@ function NoteMenu({
   params: string | null;
   isMobile: boolean;
 }) {
-  const [notes, setNotes] = useLocalStorage<INotes[]>("notes", []);
+  const { notes, setNotes } = useContext(NoteContext);
   const [filter, setFilter] = useState<string>("all");
   const [isAddNote, setIsAddNote] = useState(false);
   const [search, setSearch] = useState("");

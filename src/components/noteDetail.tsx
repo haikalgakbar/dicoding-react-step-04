@@ -1,9 +1,8 @@
-import React from "react";
-import INotes from "../types/notes.js";
+import React, { useContext } from "react";
 import EmptyState from "./noteDetail/emptyState.js";
 import InvalidParams from "./noteDetail/invalidParams.js";
 import NoteContent from "./noteDetail/noteContent.js";
-import { useLocalStorage } from "../utils/hooks.js";
+import { NoteContext } from "../utils/context.js";
 
 function NoteDetail({
   params,
@@ -12,7 +11,7 @@ function NoteDetail({
   params: string | null;
   isMobile: boolean;
 }) {
-  const [notes, setNotes] = useLocalStorage<INotes[]>("notes", []);
+  const { notes, setNotes } = useContext(NoteContext);
   const note = notes.find((note) => note.id.toString() === params);
 
   return (
