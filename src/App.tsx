@@ -1,15 +1,12 @@
 import NoteDetail from "./components/noteDetail.js";
 import NoteMenu from "./components/noteMenu.js";
-import INotes from "./types/notes.js";
 import { useWindowSize } from "./utils/hooks.js";
 import { useState, useEffect } from "react";
-import { getInitialData } from "./utils/data.js";
 
 function App() {
   const [params, setParams] = useState<string | null>(
     new URL(window.location.href).searchParams.get("note_id"),
   );
-  const [notes, setNotes] = useState<INotes[]>(getInitialData());
 
   const { width } = useWindowSize();
   const isMobile = width < 768;
@@ -30,22 +27,8 @@ function App() {
 
   return (
     <>
-      {showNoteMenu && (
-        <NoteMenu
-          notes={notes}
-          setNotes={setNotes}
-          params={params}
-          isMobile={isMobile}
-        />
-      )}
-      {showNoteDetail && (
-        <NoteDetail
-          setNotes={setNotes}
-          notes={notes}
-          params={params}
-          isMobile={isMobile}
-        />
-      )}
+      {showNoteMenu && <NoteMenu params={params} isMobile={isMobile} />}
+      {showNoteDetail && <NoteDetail params={params} isMobile={isMobile} />}
     </>
   );
 }
