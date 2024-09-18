@@ -24,14 +24,16 @@ export function cn(...classes: ClassValue[]) {
 export function filterNotes(notes: INotes[], tab: string, searchKey?: string) {
   const q = searchKey?.toLocaleLowerCase();
 
-  return notes.filter((note) => {
-    const matchesTab =
-      tab === TABS[0] ||
-      (tab === TABS[1] && !note.archived) ||
-      (tab === TABS[2] && note.archived);
+  return notes
+    .filter((note) => {
+      const matchesTab =
+        tab === TABS[0] ||
+        (tab === TABS[1] && !note.archived) ||
+        (tab === TABS[2] && note.archived);
 
-    const matchesSearchKey = !q || note.title.toLocaleLowerCase().includes(q);
+      const matchesSearchKey = !q || note.title.toLocaleLowerCase().includes(q);
 
-    return matchesTab && matchesSearchKey;
-  });
+      return matchesTab && matchesSearchKey;
+    })
+    .toReversed();
 }
