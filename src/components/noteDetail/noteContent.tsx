@@ -42,36 +42,32 @@ export default function NoteContent({
           <p>All notes</p>
         </button>
       )}
-      <header className="flex flex-col gap-2">
-        <p className="text-sm text-neutral-400">
-          {showFormattedDate(note.createdAt)}
-        </p>
+      <header className="flex flex-col">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-neutral-400">
+            {showFormattedDate(note.createdAt)}
+          </p>
+          <span className="flex">
+            <button
+              className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl hover:bg-neutral-800"
+              onClick={() => handleArchive(note.id)}
+            >
+              {!note.archived ? (
+                <Archive size={18} />
+              ) : (
+                <ArchiveRestore size={18} />
+              )}
+            </button>
+            <button
+              className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl hover:bg-neutral-800"
+              onClick={() => handleDelete(note.id)}
+            >
+              <Trash size={18} />
+            </button>
+          </span>
+        </div>
         <h1 className="text-2xl font-bold">{note.title}</h1>
       </header>
-      <div className="flex gap-2">
-        <button
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-neutral-800 px-4 py-2 hover:bg-neutral-800"
-          onClick={() => handleArchive(note.id)}
-        >
-          {!note.archived ? (
-            <>
-              <Archive size={20} />
-              Archive
-            </>
-          ) : (
-            <>
-              <ArchiveRestore size={20} />
-              Unarchive
-            </>
-          )}
-        </button>
-        <button
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-neutral-800 p-2 hover:bg-neutral-800"
-          onClick={() => handleDelete(note.id)}
-        >
-          <Trash size={20} />
-        </button>
-      </div>
       <p>{note.body}</p>
     </div>
   );

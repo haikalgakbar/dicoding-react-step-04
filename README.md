@@ -55,5 +55,6 @@ export default tseslint.config({
 - [x] Implement archive note from local storage
 - [x] Implement unarchive note from local storage
 - [x] Make note re render when there is action performed
-- [] Implement search note from local storage
+- [x] Implement search note from local storage
+- [x] Redesign note detail page
 - [] Refactor component structure
