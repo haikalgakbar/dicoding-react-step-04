@@ -16,6 +16,7 @@ export default function NoteCard({
       animate={{ opacity: 1, scale: 1 }}
       initial={{ opacity: 0, scale: 0.8 }}
       exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.15 }}
       key={note.id}
       onClick={() => navigate(`/?note_id=${note.id}`)}
       className={`flex flex-col border-b border-neutral-800 p-4 last:border-b-0 hover:cursor-pointer hover:bg-neutral-800/50 ${note.id.toString() === params && "bg-neutral-800/50"}`}

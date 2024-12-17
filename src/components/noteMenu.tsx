@@ -82,14 +82,16 @@ function NoteMenu({
       </Search>
       {notes.length === 0 ? (
         <EmptyNote />
-      ) : search.length > 0 ? (
+      ) : search.length > 0 && filteredNotes.length === 0 ? (
         <NoteNotFound />
       ) : filteredNotes.length === 0 ? (
         <NoteNotFound />
       ) : (
         <div className="flex flex-col gap-1">
           <span className="text-sm text-neutral-600">
-            {filteredNotes.length} notes
+            {filteredNotes.length > 1
+              ? `${filteredNotes.length} notes`
+              : "1 note"}
           </span>
           <div className="overflow-clip rounded-lg bg-neutral-900">
             <AnimatePresence>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { memo, useContext } from "react";
 import EmptyState from "./noteDetail/emptyState.js";
 import InvalidParams from "./noteDetail/invalidParams.js";
 import NoteContent from "./noteDetail/noteContent.js";
@@ -34,4 +34,4 @@ function NoteDetail({
   );
 }
 
-export default React.memo(NoteDetail);
+export default memo(NoteDetail);

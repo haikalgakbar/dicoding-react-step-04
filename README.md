@@ -48,14 +48,3 @@ export default tseslint.config({
   },
 })
 ```
-
-# TODO
-- [x] Implement save note to local storage
-- [x] Implement delete note from local storage
-- [x] Implement archive note from local storage
-- [x] Implement unarchive note from local storage
-- [x] Make note re render when there is action performed
-- [x] Implement search note from local storage
-- [x] Redesign note detail page
-- [] Refactor component structure
-- [] Use framer motion for animation
