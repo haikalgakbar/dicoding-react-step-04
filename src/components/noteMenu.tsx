@@ -35,7 +35,7 @@ function NoteMenu({
       className={`col-span-full flex h-dvh flex-col gap-4 overflow-auto p-4 transition-all duration-300 md:col-span-4 xl:col-span-3 ${!isMobile && "pe-3"}`}
     >
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">ReactNotes✏️</h1>
+        <h1 className="text-2xl font-bold">React Notes</h1>
         <button
           onClick={() => setIsAddNote(!isAddNote)}
           className="cursor-pointer rounded-lg bg-neutral-800 p-2 hover:bg-neutral-700"
