@@ -2,19 +2,25 @@ import { useState, useEffect } from "react";
 
 export function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
-    width: 1280,
-    height: 720,
+    width: window.innerWidth || 1280,
+    height: window.innerHeight || 720,
   });
 
   useEffect(() => {
-    const changeWindowSize = () =>
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    let timeoutId: number;
 
-    changeWindowSize();
+    function changeWindowSize() {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      }, 500);
+    }
+
     window.addEventListener("resize", changeWindowSize);
 
     return () => {
       window.removeEventListener("resize", changeWindowSize);
+      clearTimeout(timeoutId);
     };
   }, []);
 
